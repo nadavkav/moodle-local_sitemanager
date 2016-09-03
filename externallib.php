@@ -56,14 +56,13 @@ class local_sitemanager_external extends external_api {
         $warnings = array();
         $settings = array();
 
-        $pluginsettings = (array)get_config($plugin, $key);
-        //var_dump($pluginsettings);
+        $pluginsettings = (array)get_config($params['plugin'], $params['key']);
 
-        if ($key == null) {
+        if ($params['key'] == null) {
             // Get all the plugin settings.
             foreach ($pluginsettings as $key => $val) {
                 $settings[] = array(
-                    //'plugin' => $plugin,
+                    //'plugin' => $params['plugin'],
                     'key' => $key,
                     'value' => $val,
                 );
@@ -71,8 +70,8 @@ class local_sitemanager_external extends external_api {
         } else {
             // Get that specific key setting.
             $settings[] = array(
-                //'plugin' => $plugin,
-                'key' => $key,
+                //'plugin' => $params['plugin'],
+                'key' => $params['key'],
                 'value' => $pluginsettings[0],
             );
         }
@@ -123,8 +122,6 @@ class local_sitemanager_external extends external_api {
                     )
                 ),
                 'plugin' => new external_value(PARAM_TEXT, 'plugin', VALUE_OPTIONAL),
-                //'key' => new external_value(PARAM_ALPHA, 'key'),
-                //'value' => new external_value(PARAM_RAW, 'value'),
             )
         );
     }
@@ -147,7 +144,7 @@ class local_sitemanager_external extends external_api {
         // Warnings array, it can be empty at the end but is mandatory.
         $warnings = array();
         $status = true;
-//var_dump($params['settings']);
+
         foreach ($params['settings'] as $setting) {
             // NOTE: $setting->vlue == null will delete $setting->name
             var_dump($setting);
